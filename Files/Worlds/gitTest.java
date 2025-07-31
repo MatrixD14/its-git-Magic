@@ -59,7 +59,7 @@ public class gitTest extends Component {
     try {
       byte[] date = readFile(pasth);
       String encode = Base64.getEncoder().encodeToString(date);
-      String json = "{\n  \"message\": \"" + menssage + "\",\n  \"content\": \"" + encode + "\",\n  \"branch\": \"main\",\n  "+ (sha!= null && !sha.isEmpty()?"\"sha\": \"" + sha + "\"":"")+"\n}";
+      String json = "{\n  \"message\": \"" + menssage + "\",\n  \"content\": \"" + encode + "\",\n  \"branch\": \"main\""+ (sha!= null && !sha.isEmpty()?",\n  \"sha\": \"" + sha + "\"":"")+"\n}";
       Console.log(json);
 
       URL url = new URL(link);
@@ -74,7 +74,7 @@ public class gitTest extends Component {
       output.flush();
       output.close();
       int menss = com.getResponseCode();
-      Console.log(menss == 201 || menss == 200 ? "folder enviado sucess" : "erro em algum folder");
+      Console.log(menss == 201 || menss == 200 ? "file enviado sucess" : "erro em algum folder");
 
       InputStream input = (menss >= 400) ? com.getErrorStream() : com.getInputStream();
       BufferedReader reader = new BufferedReader(new InputStreamReader(input));
