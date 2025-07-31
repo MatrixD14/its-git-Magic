@@ -23,6 +23,7 @@ public class gitTest extends Component {
 
   public void download() {
     tm = Directories.getProjectFolder() + "/Files/" + paths;
+    String FileUrl = "https://raw.githubusercontent.com/"+linkNamePasth+"/main/"+paths;
     String json = "{\n pasth:\"" + tm + "\",\n NameFile: " + paths + "\n}";
     Console.log(json);
     update(linkNamePasth, tm);
