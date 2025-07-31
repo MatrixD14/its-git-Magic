@@ -6,6 +6,7 @@ public class testjava extends Component {
   private menu stop;
   void start(){
       stop = WorldController.findObject("cenario").findComponent("menu");
+      stop = WorldController.findObject("cenario").findComponent("menu");
   }
   void repeat() {
      // if(stop.OpenPosh) return;
