@@ -33,9 +33,8 @@ public class gitTest extends Component {
     String FileUrl = "https://api.github.com/repos/"+linkNamePasth+"/contents/Files/" + paths + "?ref=main";
     String shas = getSha(FileUrl, toke);
     Console.log(!shas.isEmpty() ? "update" : "create");
-    gitpush(FileUrl, Commit, tm, toke, !shas.isEmpty()?shas:"");
-   // Console.log("Link: "+FileUrl);
-    // https://api.github.com/repos/MatrixD14/game2d/contents/
+    gitpush(FileUrl, Commit, tm, toke, shas);
+    Console.log("Link: "+FileUrl);
   } 
 
   public void update(String link, String path) {
@@ -60,7 +59,7 @@ public class gitTest extends Component {
     try {
       byte[] date = readFile(pasth);
       String encode = Base64.getEncoder().encodeToString(date);
-      String json = "{\n  \"message\": \"" + menssage + "\",\n  \"content\": \"" + encode + "\",\n  \"branch\": \"main\",\n  \"sha\": \"" + sha + "\"\n}";
+      String json = "{\n  \"message\": \"" + menssage + "\",\n  \"content\": \"" + encode + "\",\n  \"branch\": \"main\",\n  "+ (sha!= null && !sha.isEmpty()?"\"sha\": \"" + sha + "\"":"")+"\n}";
       Console.log(json);
 
       URL url = new URL(link);
