@@ -2,7 +2,7 @@ public class gitTest extends Component {
   @Order(idx = -2)
   public String linkNamePasth, paths;
   public String Commit = "comito", toke;
-  private String tm;
+  private String Dir;
   
   @Order(idx = -1)
   public PropertiesButton DownLoad =
@@ -22,20 +22,23 @@ public class gitTest extends Component {
           });
 
   public void download() {
-    tm = Directories.getProjectFolder() + "/Files/" + paths;
-    String FileUrl = "https://raw.githubusercontent.com/"+linkNamePasth+"/main/"+paths;
-    String json = "{\n pasth:\"" + tm + "\",\n NameFile: " + paths + "\n}";
-    Console.log(json);
-    update(linkNamePasth, tm);
+   Dir = Directories.getProjectFolder() + "/Files/" + paths;
+    String DownloadUrl = "https://raw.githubusercontent.com/"+linkNamePasth+"/main/Files/"+paths;    
+    update(DownloadUrl, Dir);
+    
+    String InforDate = "{\n \"pasth\": \"" + Dir + "\",\n \"NameFile\": \"" + paths + "\"Link\": \""+DownloadUrl+"\n}";
+    Console.log(InforDate);
   }
 
   public void upFile() {
-    tm = Directories.getProjectFolder() + "/Files/" + paths;
-    String FileUrl = "https://api.github.com/repos/"+linkNamePasth+"/contents/Files/" + paths + "?ref=main";
-    String shas = getSha(FileUrl, toke);
+    Dir = Directories.getProjectFolder() + "/Files/" + paths;
+    String API_Url = "https://api.github.com/repos/"+linkNamePasth+"/contents/Files/" + paths + "?ref=main";
+    //busca o sha do file
+    String shas = getSha(API_Url, toke);
+    GitPush(API_Url, Commit, Dir, toke, shas);
+    
     Console.log(!shas.isEmpty() ? "update" : "create");
-    gitpush(FileUrl, Commit, tm, toke, shas);
-    Console.log("Link: "+FileUrl);
+    Console.log("Link: "+API_Url);
   } 
 
   public void update(String link, String path) {
@@ -51,12 +54,14 @@ public class gitTest extends Component {
       }
       fs.flush();
       fs.close();
+      bs.close();
+      in.close();
     } catch (Exception e) {
       Console.log(e);
     }
   }
 
-  public void gitpush(String link, String menssage, String pasth, String token, String sha) {
+  public void GitPush(String link, String menssage, String pasth, String token, String sha) {
     try {
       byte[] date = readFile(pasth);
       String encode = Base64.getEncoder().encodeToString(date);
