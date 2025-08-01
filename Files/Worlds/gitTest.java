@@ -31,39 +31,41 @@ public class gitTest extends Component {
             }
           });
 
-  public void DownLoad() {
+  public boolean verifica(boolean token) {
     if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
       Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
-      return;
-    }
-    if (pasth == null || pasth.isEmpty() || !pasth.contains(".")) {
-      Toast.showText("caminho para o arquivo esta faltando ou erro", 1);
-      return;
-    }
-
-    Dir = Directories.getProjectFolder() + "/Files/" + pasth;
-    String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
-    GitClone(DownloadUrl, Dir);
-
-    String InforDate = "{\n \"pasth\": \"" + Dir + "\",\n \"NameFile\": \"" + pasth + "\",\n \"Link\": \"" + DownloadUrl + "\"\n}";
-    Console.log(InforDate);
-  }
-
-  public void UpLoad() {
-    if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
-      Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
-      return;
+      return false;
     }
     if (pasth == null || pasth.isEmpty() || !pasth.contains(".")) {
       Toast.showText("caminho para o arquivo esta faltando ou errado", 1);
-      return;
+      return false;
     }
-    if (toke == null || toke.length() < 20) {
+    if (token && (toke == null || toke.length() < 20)) {
       Toast.showText("o toke esta vazio ou faltando", 1);
-      return;
-    } 
-
+      return false;
+    }
+    
     Dir = Directories.getProjectFolder() + "/Files/" + pasth;
+    return true;
+  } 
+
+  public void DownLoad() {
+      if(!verifica(false)) return;
+
+    String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
+    GitClone(DownloadUrl, Dir);
+
+    StringBuilder InforDate = new StringBuilder();
+    InforDate.append("{\n \"pasth\": \"").append(Dir)
+    .append("\",\n \"NameFile\": \"")
+    .append(pasth).append("\",\n \"Link\": \"")
+    .append(DownloadUrl).append("\"\n}");
+    Console.log(InforDate.toString());
+  }
+
+  public void UpLoad() {
+     if(!verifica(true)) return;
+    
     String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
 
     // busca o sha do file
@@ -102,8 +104,11 @@ public class gitTest extends Component {
 
       // json que sera enviado para api.github
 
-      String json = "{\n  \"message\": \"" + menssage + "\",\n  \"content\": \"" + encode + "\",\n  \"branch\": \"main\"" + (sha != null && !sha.isEmpty() ? ",\n  \"sha\": \"" + sha + "\"" : "") + "\n}";
-      Console.log(json);
+      StringBuilder json = new StringBuilder();
+      json.append("{\n  \"message\": \"").append( menssage).append("\",\n  \"content\": \"").append(encode).append("\",\n  \"branch\": \"main\"");
+      if (sha != null && !sha.isEmpty()) json.append(",\n  \"sha\": \"" + sha + "\"");
+      json.append("\n}");
+      Console.log(json.toString());
 
       URL url = new URL(link);
 
@@ -116,7 +121,7 @@ public class gitTest extends Component {
       com.setRequestProperty("Content-Type", "application/json");
 
       OutputStream output = com.getOutputStream();
-      output.write(json.getBytes("UTF-8"));
+      output.write(json.toString().getBytes("UTF-8"));
       output.flush();
       output.close();
 
@@ -183,7 +188,7 @@ public class gitTest extends Component {
     return "";
   }
 
-  public class GitJson {
+  public static class GitJson {
     public String sha;
   }
 }
