@@ -3,13 +3,13 @@ public class gitTest extends Component {
   public String linkNamePasth; // "name do usuario do github/ nome do repositorio -->  usuario/repositorio"
 
   @Order(idx = -1)
-  public String pasth; // caminho da pasta
+  public String pasth; // "caminho da pasta"
 
   @Order(idx = 1)
-  public String Commit = "comito"; // menssagem ou etiqueta da modificação do arquivo
+  public String Commit = "comito"; // "menssagem ou etiqueta da modificação do arquivo"
 
   @Order(idx = 2)
-  public String toke; // codigo toke do github
+  public String toke; // "codigo toke do github"
 
   private String Dir;
 
@@ -85,27 +85,33 @@ public class gitTest extends Component {
 
   public void UpLoadAll() {
     if (!verifica(true, false)) return;
-    // File dir = new File(Directories.getProjectFolder() + "/Files/");
     File dir = new File(Dir);
     if (dir == null || !dir.exists()) return;
+
+    // "lista todos oa file que existe"
+    UpVariaPasth(dir, dir.getAbsolutePath() + "");
+  }
+
+  public void UpVariaPasth(File dir, String base) {
     File[] file = dir.listFiles();
-    if (file == null || file.length == 0) return;
-
+    if (file == null) return;
     for (File f : file) {
+      if (f.isDirectory()) UpVariaPasth(f, base);
+      else if (!f.getName().startsWith(".")) {
 
-      if (f.isDirectory() || f.getName().startsWith(".")) continue;
-      String name = f.getName();
-      String cominho = f.getAbsolutePath();
-      String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + name + "?ref=main";
+        String name = f.getAbsolutePath().replace(base, "").replace('\\','/');
+        String cominho = f.getAbsolutePath();
+        String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth+name + "?ref=main";
 
-      // busca o sha do file
+        // busca o sha do file
 
-      String shas = getSha(API_Url, toke);
-      GitPush(API_Url, Commit, cominho, toke, shas);
+        String shas = getSha(API_Url, toke);
+        GitPush(API_Url, Commit, cominho, toke, shas);
 
-      Console.log(!shas.isEmpty() ? "update" : "create");
-      Console.log("Link: " + API_Url);
-    } 
+        Console.log(!shas.isEmpty() ? "update" : "create");
+        Console.log("Link: " + API_Url);
+      } 
+    }
   }
 
   public void GitClone(String link, String path) {
