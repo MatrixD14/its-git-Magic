@@ -1,4 +1,4 @@
-no campo **linkNamePasth** 
+no campo **linkNamePasth**
   
   e para coloca o nome do usuario do git "/" o nome do repositorio onde sera armazenado o arquivo 
 
@@ -19,6 +19,7 @@ no campo **pasth**
 ------------------------------------------------------------------------------------------------
   
 no campo **Commit**
+
   vai se a etiqueta que indica que o arquivo foi enviado
 
   Ex.: Commit = "update do arquivo"
@@ -26,6 +27,7 @@ no campo **Commit**
 ------------------------------------------------------------------------------------------------
   
 no compo **toke**
+
    e uma das paste mais importante é onde que você vai coloca o codigo token para libera acesso para envio do repositorio do github **usa o token(class)** 
    
    **link de uma youtube como gera toke(class)**
