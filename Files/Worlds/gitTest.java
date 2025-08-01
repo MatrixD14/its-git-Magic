@@ -3,13 +3,13 @@ public class gitTest extends Component {
   public String linkNamePasth; // "name do usuario do github/ nome do repositorio -->  usuario/repositorio"
 
   @Order(idx = -1)
-  public String pasth; //caminho da pasta
+  public String pasth; // caminho da pasta
 
   @Order(idx = 1)
-  public String Commit = "comito"; //menssagem ou etiqueta da modificação do arquivo
+  public String Commit = "comito"; // menssagem ou etiqueta da modificação do arquivo
 
   @Order(idx = 2)
-  public String toke; //codigo toke do github
+  public String toke; // codigo toke do github
 
   private String Dir;
 
@@ -32,7 +32,14 @@ public class gitTest extends Component {
           });
 
   public void DownLoad() {
-    if (pasth == null || pasth.isEmpty() || !pasth.contains(".") || !linkNamePasth.contains("/") || linkNamePasth.isEmpty()) return;
+    if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
+      Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
+      return;
+    }
+    if (pasth == null || pasth.isEmpty() || !pasth.contains(".")) {
+      Toast.showText("caminho para o arquivo esta faltando ou erro", 1);
+      return;
+    }
 
     Dir = Directories.getProjectFolder() + "/Files/" + pasth;
     String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
@@ -40,10 +47,21 @@ public class gitTest extends Component {
 
     String InforDate = "{\n \"pasth\": \"" + Dir + "\",\n \"NameFile\": \"" + pasth + "\",\n \"Link\": \"" + DownloadUrl + "\"\n}";
     Console.log(InforDate);
-  } 
+  }
 
   public void UpLoad() {
-    if (pasth == null || pasth.isEmpty() || !pasth.contains(".") || !linkNamePasth.contains("/") || linkNamePasth.isEmpty() || toke == null || toke.length() < 20) return;
+    if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
+      Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
+      return;
+    }
+    if (pasth == null || pasth.isEmpty() || !pasth.contains(".")) {
+      Toast.showText("caminho para o arquivo esta faltando ou errado", 1);
+      return;
+    }
+    if (toke == null || toke.length() < 20) {
+      Toast.showText("o toke esta vazio ou faltando", 1);
+      return;
+    } 
 
     Dir = Directories.getProjectFolder() + "/Files/" + pasth;
     String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
