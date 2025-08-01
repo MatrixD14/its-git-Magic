@@ -176,9 +176,10 @@ public class gitTest extends Component {
       StringBuilder result = new StringBuilder();
       String line;
       while ((line = reader.readLine()) != null) result.append(line);
-
+      input.close();
+      
       GitJson json = (GitJson) Json.fromJson(result.toString(), GitJson.class, true);
-
+     
       if (json != null && json.sha != null) return json.sha;
       else Console.log("falho o sha");
       input.close();
