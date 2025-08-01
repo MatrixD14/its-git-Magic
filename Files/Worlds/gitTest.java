@@ -30,7 +30,8 @@ public class gitTest extends Component {
               UpLoad();
             }
           });
-   @Order(idx = 4)
+
+  @Order(idx = 4)
   public PropertiesButton UpLoadAll =
       new PropertiesButton(
           new PropertiesButtonListener() {
@@ -39,12 +40,12 @@ public class gitTest extends Component {
             }
           });
 
-  public boolean verifica(boolean token) {
+  public boolean verifica(boolean token, boolean pont) {
     if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
       Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
       return false;
     }
-    if (pasth == null || pasth.isEmpty() || !pasth.contains(".")) {
+    if (pasth == null || pasth.isEmpty() || (pont && !pasth.contains("."))) {
       Toast.showText("caminho para o arquivo esta faltando ou errado", 1);
       return false;
     }
@@ -58,7 +59,7 @@ public class gitTest extends Component {
   }
 
   public void DownLoad() {
-    if (!verifica(false)) return;
+    if (!verifica(false, true)) return;
 
     String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
     // GitClone(DownloadUrl, Dir);
@@ -69,7 +70,7 @@ public class gitTest extends Component {
   }
 
   public void UpLoad() {
-    if (!verifica(true)) return;
+    if (!verifica(true, true)) return;
 
     String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
 
@@ -83,8 +84,9 @@ public class gitTest extends Component {
   }
 
   public void UpLoadAll() {
-    if (!verifica(true)) return;
-    File dir = new File(Directories.getProjectFolder() + "/Files/");
+    if (!verifica(true, false)) return;
+    // File dir = new File(Directories.getProjectFolder() + "/Files/");
+    File dir = new File(Dir);
     if (dir == null || !dir.exists()) return;
     File[] file = dir.listFiles();
     if (file == null || file.length == 0) return;
@@ -103,8 +105,8 @@ public class gitTest extends Component {
 
       Console.log(!shas.isEmpty() ? "update" : "create");
       Console.log("Link: " + API_Url);
-    }
-  } 
+    } 
+  }
 
   public void GitClone(String link, String path) {
     try {
