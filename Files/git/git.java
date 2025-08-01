@@ -56,7 +56,6 @@ public class git extends Component {
   }
 
   public void UpLoad() {
-    gitPush gitpush = new gitPush();
     if (!verifica(true, true)) return;
 
     String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
@@ -72,6 +71,7 @@ public class git extends Component {
 
   public void UpLoadAll() {
     if (!verifica(true, false)) return;
+    
     File dir = new File(Dir);
     if (dir == null || !dir.exists()) return;
 
