@@ -62,12 +62,12 @@ public class gitTest extends Component {
     if (!verifica(false, true)) return;
 
     String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
-    // GitClone(DownloadUrl, Dir);
+    GitClone(DownloadUrl, Dir);
 
     StringBuilder InforDate = new StringBuilder();
-    // InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(pasth).append("\",\n \"Link\": \"").append(DownloadUrl).append("\"\n}");
-    // Console.log(InforDate.toString());
-  }
+    InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(pasth).append("\",\n \"Link\": \"").append(DownloadUrl).append("\"\n}");
+    Console.log(InforDate.toString());
+  } 
 
   public void UpLoad() {
     if (!verifica(true, true)) return;
@@ -110,7 +110,7 @@ public class gitTest extends Component {
 
         Console.log(!shas.isEmpty() ? "update" : "create");
         Console.log("Link: " + API_Url);
-      } 
+      }
     }
   }
 
