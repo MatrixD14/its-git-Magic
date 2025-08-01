@@ -106,7 +106,7 @@ public class gitTest extends Component {
 
       StringBuilder json = new StringBuilder();
       json.append("{\n  \"message\": \"").append( menssage).append("\",\n  \"content\": \"").append(encode).append("\",\n  \"branch\": \"main\"");
-      if (sha != null && !sha.isEmpty()) json.append(",\n  \"sha\": \"" + sha + "\"");
+      if (sha != null && !sha.isEmpty()) json.append(",\n  \"sha\": \"").append(sha).append("\"");
       json.append("\n}");
       Console.log(json.toString());
 
