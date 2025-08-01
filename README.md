@@ -32,7 +32,7 @@ no compo **toke**
 
    e uma das paste mais importante é onde que você vai coloca o codigo token para libera acesso para envio do repositorio do github **usa o token(class)** 
    
-   **link de uma youtube como gera toke(class)**
+   **link, como gera toke(class)?**
    
    Link:  https://youtu.be/T_97CyDFTEU?si=lcvCgngdHxwvuxIz
    
