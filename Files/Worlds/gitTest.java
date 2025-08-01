@@ -1,10 +1,13 @@
 public class gitTest extends Component {
   @Order(idx = -2)
   public String linkNamePasth;
+
   @Order(idx = -1)
   public String pasth;
+
   @Order(idx = 1)
   public String Commit = "comito";
+
   @Order(idx = 2)
   public String toke;
 
@@ -18,7 +21,8 @@ public class gitTest extends Component {
               DownLoad();
             }
           });
-          @Order(idx = 3)
+
+  @Order(idx = 3)
   public PropertiesButton UpLoad =
       new PropertiesButton(
           new PropertiesButtonListener() {
@@ -29,18 +33,18 @@ public class gitTest extends Component {
 
   public void DownLoad() {
     if (pasth == null || pasth.isEmpty() || !pasth.contains(".") || !linkNamePasth.contains("/") || linkNamePasth.isEmpty()) return;
-    
+
     Dir = Directories.getProjectFolder() + "/Files/" + pasth;
     String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
     GitClone(DownloadUrl, Dir);
 
     String InforDate = "{\n \"pasth\": \"" + Dir + "\",\n \"NameFile\": \"" + pasth + "\",\n \"Link\": \"" + DownloadUrl + "\"\n}";
     Console.log(InforDate);
-  }
+  } 
 
   public void UpLoad() {
     if (pasth == null || pasth.isEmpty() || !pasth.contains(".") || !linkNamePasth.contains("/") || linkNamePasth.isEmpty() || toke == null || toke.length() < 20) return;
-    
+
     Dir = Directories.getProjectFolder() + "/Files/" + pasth;
     String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
 
@@ -51,7 +55,7 @@ public class gitTest extends Component {
 
     Console.log(!shas.isEmpty() ? "update" : "create");
     Console.log("Link: " + API_Url);
-  } 
+  }
 
   public void GitClone(String link, String path) {
     try {
