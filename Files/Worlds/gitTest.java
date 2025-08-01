@@ -1,15 +1,15 @@
 public class gitTest extends Component {
   @Order(idx = -2)
-  public String linkNamePasth;
+  public String linkNamePasth; // "name do usuario do github/ nome do repositorio -->  usuario/repositorio"
 
   @Order(idx = -1)
-  public String pasth;
+  public String pasth; //caminho da pasta
 
   @Order(idx = 1)
-  public String Commit = "comito";
+  public String Commit = "comito"; //menssagem ou etiqueta da modificação do arquivo
 
   @Order(idx = 2)
-  public String toke;
+  public String toke; //codigo toke do github
 
   private String Dir;
 
