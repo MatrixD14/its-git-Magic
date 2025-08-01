@@ -30,6 +30,14 @@ public class gitTest extends Component {
               UpLoad();
             }
           });
+   @Order(idx = 4)
+  public PropertiesButton UpLoadAll =
+      new PropertiesButton(
+          new PropertiesButtonListener() {
+            void onClicked() {
+              UpLoadAll();
+            }
+          });
 
   public boolean verifica(boolean token) {
     if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
@@ -44,28 +52,25 @@ public class gitTest extends Component {
       Toast.showText("o toke esta vazio ou faltando", 1);
       return false;
     }
-    
+
     Dir = Directories.getProjectFolder() + "/Files/" + pasth;
     return true;
-  } 
+  }
 
   public void DownLoad() {
-      if(!verifica(false)) return;
+    if (!verifica(false)) return;
 
     String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
-    GitClone(DownloadUrl, Dir);
+    // GitClone(DownloadUrl, Dir);
 
     StringBuilder InforDate = new StringBuilder();
-    InforDate.append("{\n \"pasth\": \"").append(Dir)
-    .append("\",\n \"NameFile\": \"")
-    .append(pasth).append("\",\n \"Link\": \"")
-    .append(DownloadUrl).append("\"\n}");
-    Console.log(InforDate.toString());
+    // InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(pasth).append("\",\n \"Link\": \"").append(DownloadUrl).append("\"\n}");
+    // Console.log(InforDate.toString());
   }
 
   public void UpLoad() {
-     if(!verifica(true)) return;
-    
+    if (!verifica(true)) return;
+
     String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
 
     // busca o sha do file
@@ -76,6 +81,30 @@ public class gitTest extends Component {
     Console.log(!shas.isEmpty() ? "update" : "create");
     Console.log("Link: " + API_Url);
   }
+
+  public void UpLoadAll() {
+    if (!verifica(true)) return;
+    File dir = new File(Directories.getProjectFolder() + "/Files/");
+    if (dir == null || !dir.exists()) return;
+    File[] file = dir.listFiles();
+    if (file == null || file.length == 0) return;
+
+    for (File f : file) {
+
+      if (f.isDirectory() || f.getName().startsWith(".")) continue;
+      String name = f.getName();
+      String cominho = f.getAbsolutePath();
+      String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + name + "?ref=main";
+
+      // busca o sha do file
+
+      String shas = getSha(API_Url, toke);
+      GitPush(API_Url, Commit, cominho, toke, shas);
+
+      Console.log(!shas.isEmpty() ? "update" : "create");
+      Console.log("Link: " + API_Url);
+    }
+  } 
 
   public void GitClone(String link, String path) {
     try {
@@ -105,7 +134,7 @@ public class gitTest extends Component {
       // json que sera enviado para api.github
 
       StringBuilder json = new StringBuilder();
-      json.append("{\n  \"message\": \"").append( menssage).append("\",\n  \"content\": \"").append(encode).append("\",\n  \"branch\": \"main\"");
+      json.append("{\n  \"message\": \"").append(menssage).append("\",\n  \"content\": \"").append(encode).append("\",\n  \"branch\": \"main\"");
       if (sha != null && !sha.isEmpty()) json.append(",\n  \"sha\": \"").append(sha).append("\"");
       json.append("\n}");
       Console.log(json.toString());
@@ -177,9 +206,9 @@ public class gitTest extends Component {
       String line;
       while ((line = reader.readLine()) != null) result.append(line);
       input.close();
-      
+
       GitJson json = (GitJson) Json.fromJson(result.toString(), GitJson.class, true);
-     
+
       if (json != null && json.sha != null) return json.sha;
       else Console.log("falho o sha");
       input.close();
