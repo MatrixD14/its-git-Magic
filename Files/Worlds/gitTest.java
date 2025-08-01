@@ -1,10 +1,16 @@
 public class gitTest extends Component {
   @Order(idx = -2)
-  public String linkNamePasth = "NameGitUSR/Repositorio", pasth;
-  public String Commit = "comito", toke;
-  private String Dir;
-  
+  public String linkNamePasth;
   @Order(idx = -1)
+  public String pasth;
+  @Order(idx = 1)
+  public String Commit = "comito";
+  @Order(idx = 2)
+  public String toke;
+
+  private String Dir;
+
+  @Order(idx = 0)
   public PropertiesButton DownLoad =
       new PropertiesButton(
           new PropertiesButtonListener() {
@@ -12,8 +18,8 @@ public class gitTest extends Component {
               DownLoad();
             }
           });
-
-  public PropertiesButton update =
+          @Order(idx = 3)
+  public PropertiesButton UpLoad =
       new PropertiesButton(
           new PropertiesButtonListener() {
             void onClicked() {
@@ -22,25 +28,29 @@ public class gitTest extends Component {
           });
 
   public void DownLoad() {
-      if(pasth == null || pasth.isEmpty() || !linkNamePasth.contains("/") || linkNamePasth.isEmpty()) return;
-   Dir = Directories.getProjectFolder() + "/Files/" + pasth;
-    String DownloadUrl = "https://raw.githubusercontent.com/"+linkNamePasth+"/main/Files/"+pasth;    
-    GitClone(DownloadUrl, Dir);
+    if (pasth == null || pasth.isEmpty() || !pasth.contains(".") || !linkNamePasth.contains("/") || linkNamePasth.isEmpty()) return;
     
-    String InforDate = "{\n \"pasth\": \"" + Dir + "\",\n \"NameFile\": \"" + pasth + "\"Link\": \""+DownloadUrl+"\n}";
+    Dir = Directories.getProjectFolder() + "/Files/" + pasth;
+    String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
+    GitClone(DownloadUrl, Dir);
+
+    String InforDate = "{\n \"pasth\": \"" + Dir + "\",\n \"NameFile\": \"" + pasth + "\",\n \"Link\": \"" + DownloadUrl + "\"\n}";
     Console.log(InforDate);
   }
 
   public void UpLoad() {
-      if(pasth == null || pasth.isEmpty() || !linkNamePasth.contains("/") || linkNamePasth.isEmpty() || toke == null && toke.isEmpty()) return;
+    if (pasth == null || pasth.isEmpty() || !pasth.contains(".") || !linkNamePasth.contains("/") || linkNamePasth.isEmpty() || toke == null || toke.length() < 20) return;
+    
     Dir = Directories.getProjectFolder() + "/Files/" + pasth;
-    String API_Url = "https://api.github.com/repos/"+linkNamePasth+"/contents/Files/" + pasth + "?ref=main";
-    //busca o sha do file
+    String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
+
+    // busca o sha do file
+
     String shas = getSha(API_Url, toke);
     GitPush(API_Url, Commit, Dir, toke, shas);
-    
+
     Console.log(!shas.isEmpty() ? "update" : "create");
-    Console.log("Link: "+API_Url);
+    Console.log("Link: " + API_Url);
   } 
 
   public void GitClone(String link, String path) {
@@ -67,16 +77,16 @@ public class gitTest extends Component {
     try {
       byte[] date = readFile(pasth);
       String encode = Base64.getEncoder().encodeToString(date);
-      
-      //json que sera enviado para api.github
-      
-      String json = "{\n  \"message\": \"" + menssage + "\",\n  \"content\": \"" + encode + "\",\n  \"branch\": \"main\""+ (sha!= null && !sha.isEmpty()?",\n  \"sha\": \"" + sha + "\"":"")+"\n}";
+
+      // json que sera enviado para api.github
+
+      String json = "{\n  \"message\": \"" + menssage + "\",\n  \"content\": \"" + encode + "\",\n  \"branch\": \"main\"" + (sha != null && !sha.isEmpty() ? ",\n  \"sha\": \"" + sha + "\"" : "") + "\n}";
       Console.log(json);
 
       URL url = new URL(link);
-      
-      //connect com o github
-      
+
+      // connect com o github
+
       HttpURLConnection com = (HttpURLConnection) url.openConnection();
       com.setRequestMethod("PUT");
       com.setDoOutput(true);
@@ -87,9 +97,9 @@ public class gitTest extends Component {
       output.write(json.getBytes("UTF-8"));
       output.flush();
       output.close();
-      
-      ///vierifica se teve algum erro ao conectar como github
-      
+
+      /// vierifica se teve algum erro ao conectar como github
+
       int menss = com.getResponseCode();
       Console.log(menss == 201 || menss == 200 ? "file enviado sucess" : "erro em algum folder");
 
@@ -105,8 +115,7 @@ public class gitTest extends Component {
     }
   }
 
-
-  ///função que ve o tamanho do file que sera enviado para git para não manda faltando em byte
+  /// função que ve o tamanho do file que sera enviado para git para não manda faltando em byte
 
   public byte[] readFile(String pasth) {
     try {
@@ -122,14 +131,13 @@ public class gitTest extends Component {
     }
     return null;
   }
-  
-  
-  ///funcão vai busca no json da api.github onde esta o "sha" do file existe no github
-  
+
+  /// funcão vai busca no json da api.github onde esta o "sha" do file existe no github
+
   public String getSha(String link, String token) {
     try {
       URL url = new URL(link);
-      
+
       HttpURLConnection com = (HttpURLConnection) url.openConnection();
       com.setRequestMethod("GET");
       com.setRequestProperty("Authorization", "token " + token);
@@ -141,10 +149,10 @@ public class gitTest extends Component {
       StringBuilder result = new StringBuilder();
       String line;
       while ((line = reader.readLine()) != null) result.append(line);
-            
-      GitJson json = (GitJson) Json.fromJson(result.toString(), GitJson.class,true);
-      
-      if(json != null && json.sha != null)return json.sha;
+
+      GitJson json = (GitJson) Json.fromJson(result.toString(), GitJson.class, true);
+
+      if (json != null && json.sha != null) return json.sha;
       else Console.log("falho o sha");
       input.close();
     } catch (Exception e) {
@@ -152,7 +160,8 @@ public class gitTest extends Component {
     }
     return "";
   }
-  public class GitJson{
-      public String sha;
+
+  public class GitJson {
+    public String sha;
   }
 }
