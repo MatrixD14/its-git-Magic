@@ -19,7 +19,7 @@ no campo **pasth**
 ------------------------------------------------------------------------------------------------
   
 no campo **Commit**
-  vai se a etiqueta que foi enviado o update do arquivos
+  vai se a etiqueta que indica que o arquivo foi enviado
 
   Ex.: Commit = "update do arquivo"
 
