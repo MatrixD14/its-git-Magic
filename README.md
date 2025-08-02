@@ -1,8 +1,10 @@
-no campo **linkNamePasth**
+campo **linkNamePasth**
   
-  e para coloca o nome do usuario do git "/" o nome do repositorio onde sera armazenado o arquivo 
+ Aqui você escreve o nome do seu usuário do GitHub, depois uma barra /, e o nome do repositório onde o arquivo vai ficar salvo.
 
-  Ex.: linkNamePasth = NameUSe / repositorio
+Ex.:
+Se seu usuário no GitHub for joao123 e o repositório for meu-projeto, então:
+linkNamePasth = joao123/meu-projeto
 
 ------------------------------------------------------------------------------------------------
 
@@ -20,18 +22,39 @@ no campo **pasth**
 
 ------------------------------------------------------------------------------------------------
   
-no campo **Commit**
+campo **Commit**
 
-  vai se a etiqueta que indica que o arquivo foi enviado
-
-  Ex.: Commit = "update do arquivo"
+  Aqui você coloca uma mensagem curta dizendo o que está enviando para o GitHub.
+ Ex.:
+Commit = Atualização do sistema de login
 
 ------------------------------------------------------------------------------------------------
   
-no compo **toke**
+ compo **toke**
 
-   e uma das paste mais importante é onde que você vai coloca o codigo token para libera acesso para envio do repositorio do github **usa o token(class)** 
-   
+Esse é o mais importante.
+Aqui você coloca o código secreto do GitHub que dá permissão para enviar arquivos pro seu repositório. Esse código é chamado de “Token”.
+
+Como pegar esse código (Token)
+
+  1- Entre no site: https://github.com/settings/tokens
+
+  2- Clique em “Generate new token (classic)”
+
+  3- No campo "Note", escreva qualquer nome, por exemplo: "Token da minha engine"
+
+  4- Em "Expiration", escolha “No expiration” (sem validade)
+
+  5- Marque a opção repo (essa dá permissão para enviar arquivos)
+
+  6- Clique em "Generate token"
+
+  7- Copie o código que aparecer (vai começar com ghp_...)
+
+  8- Cole esse código no campo toke no seu sistema.
+
+Exemplo:
+toke = ghp_abcd1234efgh5678ijkl9012mnop3456qrst
    **link, como gera toke(class)?**
    
    Link:  https://youtu.be/T_97CyDFTEU?si=lcvCgngdHxwvuxIz
