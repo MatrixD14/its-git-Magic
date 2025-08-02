@@ -1,16 +1,18 @@
 campo **linkNamePasth**
   
  Aqui você escreve o nome do seu usuário do GitHub, depois uma barra /, e o nome do repositório onde o arquivo vai ficar salvo.
-
+ 
 Ex.:
+
 Se seu usuário no GitHub for joao123 e o repositório for meu-projeto, então:
+
 linkNamePasth = joao123/meu-projeto
 
 ------------------------------------------------------------------------------------------------
 
 no campo **pasth**
    
-   vai ser o local que direciona em qual pasta esta o arquivo, esse sera **obrigatorio** para *DownLoad e UpLoad*, ja *UpLoadMult* so a pasta que ele vai busca todos os arquivos que existe na pasta
+   vai ser o local que direciona em qual pasta esta o arquivo, esses seram **obrigatorio** como *DownLoad e UpLoad*, ja *UpLoadMult* so a pasta que ele vai busca todos os arquivos que existe na pasta, **sem barra "/"**
 
   **DownLoad e UpLoad**
   
@@ -25,7 +27,9 @@ no campo **pasth**
 campo **Commit**
 
   Aqui você coloca uma mensagem curta dizendo o que está enviando para o GitHub.
+  
  Ex.:
+ 
 Commit = Atualização do sistema de login
 
 ------------------------------------------------------------------------------------------------
