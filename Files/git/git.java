@@ -76,7 +76,7 @@ public class git extends Component {
 
     // "lista todos oa file que existe"
     gitpushmult.UpVariaPasth(gitpush, dir, dir.getAbsolutePath() + "", linkNamePasth, Commit, pasth, toke);
-  } 
+  }
 
   public boolean verifica(boolean token, boolean pont) {
     if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
