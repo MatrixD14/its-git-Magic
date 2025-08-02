@@ -55,6 +55,7 @@ Como pegar esse código (Token)
 
 Exemplo:
 toke = ghp_abcd1234efgh5678ijkl9012mnop3456qrst
+
    **link, como gera toke(class)?**
    
    Link:  https://youtu.be/T_97CyDFTEU?si=lcvCgngdHxwvuxIz
