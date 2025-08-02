@@ -58,9 +58,9 @@ Como pegar esse código (Token)
   8- Cole esse código no campo toke no seu sistema.
 
 Exemplo:
-toke = ghp_abcd1234efgh5678ijkl9012mnop3456qrst
+toke = ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-   **link, como gera toke(class)?**
+   **link, para o tutorial?**
    
    Link:  https://youtu.be/T_97CyDFTEU?si=lcvCgngdHxwvuxIz
    
