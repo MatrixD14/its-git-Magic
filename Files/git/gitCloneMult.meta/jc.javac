@@ -15,9 +15,11 @@ public class gitCloneMult {
             return null;
           }
 
-          public void onEngine(Object result) {}
+          public void onEngine(Object result) {
+              Console.log("Download finalizado");
+          }
         });
-  } 
+  }
 
   public void processFile() {
     try {
@@ -39,27 +41,21 @@ public class gitCloneMult {
 
       FileJson(result.toString());
     } catch (IOException e) {
+        Console.log("erro no json: " + e.getMessage());
     }
   }
 
   public void FileJson(String jsons) {
-    if (jsons.startsWith("[")) jsons = jsons.substring(1);
-    if (jsons.endsWith("]")) jsons = jsons.substring(0, jsons.length() - 1);
-
-    String[] file = jsons.split("\\},\\{");
-    for (int i = 0; i < file.length; i++) {
-      String obj = file[i];
-      if (!obj.startsWith("{")) obj = "{" + obj;
-      if (!obj.endsWith("{")) obj = obj + "}";
-      try {
-        GitCloneJson json = (GitCloneJson) Json.fromJson(obj, GitCloneJson.class, true);
+    try {
+      GitCloneJson[] file = (GitCloneJson[]) Json.fromJson(jsons, GitCloneJson[].class, true);
+      for (GitCloneJson json : file) {
         if (json.type.equals("file")) {
           String destino = new File(Dir, json.name).getAbsolutePath();
           gitclone.GitClone(json.download_url, destino);
         }
-
-      } catch (Exception e) {
-      }
+      } 
+    } catch (Exception e) {
+        Console.log("erro no Download file: " + e.getMessage());
     }
   }
 
