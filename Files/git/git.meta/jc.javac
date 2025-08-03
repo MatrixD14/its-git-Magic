@@ -45,7 +45,7 @@ public class git extends Component {
           });
 
   public void DownLoad() {
-    if (!verifica(false, true)) return;
+    if (!verifica(false, false)) return;
 
     String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
     gitclone.GitClone(DownloadUrl, Dir);
@@ -83,16 +83,16 @@ public class git extends Component {
       Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
       return false;
     }
-    if (pasth == null || pasth.isEmpty() || (pont && !pasth.contains("."))) {
+    if (pasth == null || pasth.isEmpty() || (pont && !new File(Directories.getProjectFolder() + "/Files/" + pasth).isFile())) {
       Toast.showText("caminho para o arquivo esta faltando ou errado", 1);
       return false;
-    }
+    } 
     if (token && (toke == null || toke.length() < 20)) {
       Toast.showText("o toke esta vazio ou faltando", 1);
       return false;
     }
 
-    Dir = Directories.getProjectFolder() + "/Files/" + pasth;
+    Dir = Directories.getProjectFolder() + "Files/" + pasth;
     return true;
   }
 }
