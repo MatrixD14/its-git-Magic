@@ -39,15 +39,15 @@ public class git extends Component {
   public void DownLoad() {
     boolean onoffFile = false;
     if (pasth.contains(".")) onoffFile = true;
-    if (!verifica(false, false)) return;
-    if (onoffFile) {
+    if (onoffFile && verifica(false, false)){
       String DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
       gitclone.GitClone(DownloadUrl, Dir);
 
       StringBuilder InforDate = new StringBuilder();
       InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(pasth).append("\",\n \"Link\": \"").append(DownloadUrl).append("\"\n}");
       Console.log(InforDate.toString());
-    } else {
+      
+    } else if(verifica(true, false)){
         String DownloadUrl = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
         File dir = new File(Dir);
         gitclonemult.gitPasthAll(gitclone,dir,DownloadUrl,toke);
