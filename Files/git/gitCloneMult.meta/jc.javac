@@ -16,7 +16,7 @@ public class gitCloneMult {
           }
 
           public void onEngine(Object result) {
-              Console.log("Download finalizado");
+            Console.log("Download finalizado");
           }
         });
   }
@@ -41,7 +41,7 @@ public class gitCloneMult {
 
       FileJson(result.toString());
     } catch (IOException e) {
-        Console.log("erro no json: " + e.getMessage());
+      Console.log("erro no json: " + e.getMessage());
     }
   }
 
@@ -52,10 +52,13 @@ public class gitCloneMult {
         if (json.type.equals("file")) {
           String destino = new File(Dir, json.name).getAbsolutePath();
           gitclone.GitClone(json.download_url, destino);
+          StringBuilder InforDate = new StringBuilder();
+          InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(destino).append("\",\n \"Link\": \"").append(json.download_url).append("\"\n}");
+          Console.log(InforDate.toString());
         }
       } 
     } catch (Exception e) {
-        Console.log("erro no Download file: " + e.getMessage());
+      Console.log("erro no Download file: " + e.getMessage());
     }
   }
 
