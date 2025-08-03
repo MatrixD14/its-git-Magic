@@ -1,4 +1,5 @@
 public class gitClone {
+
   public void GitClone(String link, String path) {
     InputStream in = null;
     BufferedInputStream bs = null;
@@ -16,13 +17,9 @@ public class gitClone {
       while ((count = bs.read(date, 0, 1024)) != -1) {
         fs.write(date, 0, count);
       }
-      /*fs.flush();
-      fs.close();
-      bs.close();
-      in.close();*/
       if (addPasth.length() == 0) Console.log("falho file void / no exists");
     } catch (IOException e) {
-      Console.log("erro no Download file: "+ e.getMessage());
+      Console.log("erro no Download file: " + e.getMessage());
     } finally {
       try {
         if (fs != null) fs.close();
@@ -36,6 +33,6 @@ public class gitClone {
         if (in != null) in.close();
       } catch (IOException e) {
       }
-    } 
+    }
   }
 }
