@@ -10,7 +10,7 @@ public class gitPush {
       json.append("{\n  \"message\": \"").append(menssage).append("\",\n  \"content\": \"").append(encode).append("\",\n  \"branch\": \"main\"");
       if (sha != null && !sha.isEmpty()) json.append(",\n  \"sha\": \"").append(sha).append("\"");
       json.append("\n}");
-      Console.log(json.toString());
+      Console.log("{\n  \"message\": \""+menssage+"\",\n  \"branch\": \"main\",\n  "+((sha != null && !sha.isEmpty())?"\"sha\": \""+sha:"")+"\"\n}");
 
       URL url = new URL(link);
 
@@ -80,7 +80,7 @@ public class gitPush {
       while ((line = reader.readLine()) != null) result.append(line);
       input.close();
 
-      GitJson json = (GitJson) Json.fromJson(result.toString(), GitJson.class, true);
+      GitPushJson json = (GitPushJson) Json.fromJson(result.toString(), GitPushJson.class, true);
 
       if (json != null && json.sha != null) return json.sha;
       else Console.log("falho o sha");
@@ -91,7 +91,7 @@ public class gitPush {
     return "";
   }
 
-  public static class GitJson {
+  public static class GitPushJson {
     public String sha;
-  }
-} 
+  } 
+}
