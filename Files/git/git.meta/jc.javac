@@ -48,6 +48,9 @@ public class git extends Component {
       InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(pasth).append("\",\n \"Link\": \"").append(DownloadUrl).append("\"\n}");
       Console.log(InforDate.toString());
     } else {
+        String DownloadUrl = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
+        File dir = new File(Dir);
+        gitclonemult.gitPasthAll(gitclone,dir,DownloadUrl,toke);
       Console.log("test");
     }
   } 
