@@ -1,12 +1,12 @@
 public class gitCloneMult {
   private gitClone gitclone;
-  private String link, path, token;
+  private String link, token;
   private File Dir;
-  public void gitPasthAll(gitClone gitclone, File Dir,String link, String path, String token) {
-      this.Dir = Dir;
+
+  public void gitPasthAll(gitClone gitclone, File Dir, String link, String token) {
+    this.Dir = Dir;
     this.gitclone = gitclone;
     this.link = link;
-    this.path = path;
     this.token = token;
     new AsyncTask(
         new AsyncRunnable() {
@@ -17,7 +17,7 @@ public class gitCloneMult {
 
           public void onEngine(Object result) {}
         });
-  }
+  } 
 
   public void processFile() {
     try {
@@ -53,10 +53,10 @@ public class gitCloneMult {
       if (!obj.endsWith("{")) obj = obj + "}";
       try {
         GitCloneJson json = (GitCloneJson) Json.fromJson(obj, GitCloneJson.class, true);
-        if ("file".equals(json.type)) {
-            String destino = new File(Dir,json.name).getAbsolutePath();
-            gitclone.GitClone(json.download_url,destino);
-        } 
+        if (json.type.equals("file")) {
+          String destino = new File(Dir, json.name).getAbsolutePath();
+          gitclone.GitClone(json.download_url, destino);
+        }
 
       } catch (Exception e) {
       }
