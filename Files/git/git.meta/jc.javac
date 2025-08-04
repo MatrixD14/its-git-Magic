@@ -6,10 +6,11 @@ public class git extends Component {
   public String path; // "caminho da pasta a pasta /Files/ e a pasta raiz que poderar ser enviado para o github "
   
   @Order(idx = 1)
-  public String BranchOrCommitRecovery = "main";
+  public String BranchOrCommitRecovery = "main"; /// branch e uma linha paralela do projeto que muda com o tempo 
+                                                 /// CommitRecovery usa o codigo sha para voltar no tempo
   
   @Order(idx = 2)
-  public String Commit = "comito"; // "menssagem ou etiqueta da modificação do arquivo"
+  public String Commit = "comito"; // "etiqueta que marca o tempo de modificação do arquivo que quanda o sha"
 
   @Order(idx = 3)
   public String token; // "codigo toke do github"
