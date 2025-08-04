@@ -4,11 +4,13 @@ public class git extends Component {
 
   @Order(idx = -1)
   public String path; // "caminho da pasta a pasta /Files/ e a pasta raiz que poderar ser enviado para o github "
-
+  
   @Order(idx = 1)
+  public String BranchOrCommitRecovery = "main"; 
+  @Order(idx = 2)
   public String Commit = "comito"; // "menssagem ou etiqueta da modificação do arquivo"
 
-  @Order(idx = 2)
+  @Order(idx = 3)
   public String token; // "codigo toke do github"
 
   private String Dir;
@@ -27,7 +29,7 @@ public class git extends Component {
             }
           });
 
-  @Order(idx = 3)
+  @Order(idx = 4)
   public PropertiesButton UpLoad =
       new PropertiesButton(
           new PropertiesButtonListener() {
@@ -41,7 +43,8 @@ public class git extends Component {
     boolean onoffFile = false;
     if (path.contains(".")) onoffFile = true;
     if (onoffFile && verifica(false, false)) {
-      DownloadUrl = "https://raw.githubusercontent.com/" + NameGitIsRepository + "/main/Files/" + path;
+        if(BranchOrCommitRecovery == null && BranchOrCommitRecovery.length() < 40) BranchOrCommitRecovery = "main";
+      DownloadUrl = "https://raw.githubusercontent.com/" + NameGitIsRepository + BranchOrCommitRecovery+"/Files/" + path;
       gitclone.GitClone(DownloadUrl, Dir);
 
       StringBuilder InforDate = new StringBuilder();
