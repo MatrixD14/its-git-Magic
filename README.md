@@ -1,4 +1,4 @@
-campo **linkNamePasth**
+campo **NameGitIsRepository**
   
  Aqui você escreve o nome do seu usuário do GitHub, depois uma barra /, e o nome do repositório onde o arquivo vai ficar salvo.
  
@@ -6,23 +6,28 @@ Ex.:
 
 Se seu usuário no GitHub for joao123 e o repositório for meu-projeto, então:
 
-linkNamePasth = joao123/meu-projeto
+NameGitIsRepository = joao123/meu-projeto
 
 ------------------------------------------------------------------------------------------------
 
-no campo **pasth**
+no campo **path**
    
    vai ser o local que direciona em qual pasta esta o arquivo, esses seram **obrigatorio** como *DownLoad e UpLoad*.
 
   **DownLoad e UpLoad**
   Name do file
-  Ex.: pasth = pasta1/pasta2/arquivo.java(.go, .class, .dex, .lua etc.)
+  Ex.: path = pasta1/pasta2/arquivo.java(.go, .class, .dex, .lua etc.)
 
   Name do path
-  Ex.: pasth = path1/path2
+  Ex.: path = path1/path2
 
 ------------------------------------------------------------------------------------------------
+campo **BranchOrCommitRecovery**
+  onde vai definir a **Branch** ou recupera o tempo do codigo onde não deu erro usando **Commit sha**, o **branch** esta disponivel, so para **Download** então mantenha o **branch** em "main" como padrão para baixar os arquivos atualizados 
   
+  Ex.: BranchOrCommitRecovery = main  //padrão de um repositorio criado e não adiciono mais uma branch
+
+------------------------------------------------------------------------------------------------
 campo **Commit**
 
   Aqui você coloca uma mensagem curta dizendo o que está enviando para o GitHub.
