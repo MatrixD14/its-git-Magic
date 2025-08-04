@@ -12,15 +12,14 @@ linkNamePasth = joao123/meu-projeto
 
 no campo **pasth**
    
-   vai ser o local que direciona em qual pasta esta o arquivo, esses seram **obrigatorio** como *DownLoad e UpLoad*, ja *UpLoadMult* so a pasta que ele vai busca todos os arquivos que existe na pasta, **sem barra "/"**
+   vai ser o local que direciona em qual pasta esta o arquivo, esses seram **obrigatorio** como *DownLoad e UpLoad*.
 
   **DownLoad e UpLoad**
-  
+  Name do file
   Ex.: pasth = pasta1/pasta2/arquivo.java(.go, .class, .dex, .lua etc.)
 
-  **UpLoadMult**
-  
-  Ex.: pasth = pasth1/pasth1/*
+  Name do path
+  Ex.: pasth = path1/path2
 
 ------------------------------------------------------------------------------------------------
   
