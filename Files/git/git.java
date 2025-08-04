@@ -6,8 +6,7 @@ public class git extends Component {
   public String path; // "caminho da pasta a pasta /Files/ e a pasta raiz que poderar ser enviado para o github "
   
   @Order(idx = 1)
-  public String BranchOrCommitRecovery = "main";
-  
+  public String BranchOrCommitRecovery = "main"; 
   @Order(idx = 2)
   public String Commit = "comito"; // "menssagem ou etiqueta da modificação do arquivo"
 
@@ -45,7 +44,7 @@ public class git extends Component {
     if (path.contains(".")) onoffFile = true;
     if (onoffFile && verifica(false, false)) {
         if(BranchOrCommitRecovery == null && BranchOrCommitRecovery.length() < 40) BranchOrCommitRecovery = "main";
-      DownloadUrl = "https://raw.githubusercontent.com/" + NameGitIsRepository + BranchOrCommitRecovery+"/Files/" + path;
+      DownloadUrl = "https://raw.githubusercontent.com/" + NameGitIsRepository +"/"+ BranchOrCommitRecovery+"/Files/" + path;
       gitclone.GitClone(DownloadUrl, Dir);
 
       StringBuilder InforDate = new StringBuilder();
