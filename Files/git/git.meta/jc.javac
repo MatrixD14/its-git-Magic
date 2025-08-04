@@ -1,15 +1,15 @@
 public class git extends Component {
   @Order(idx = -2)
-  public String linkNamePasth; // "name do usuario do github/ nome do repositorio -->  usuario/repositorio"
+  public String NameGitIsRepository; // "name do usuario do github/ nome do repositorio que sera alocado os arquivo-->  usuario/repositorio"
 
   @Order(idx = -1)
-  public String pasth; // "caminho da pasta"
+  public String path; // "caminho da pasta a pasta /Files/ e a pasta raiz que poderar ser enviado para o github "
 
   @Order(idx = 1)
   public String Commit = "comito"; // "menssagem ou etiqueta da modificação do arquivo"
 
   @Order(idx = 2)
-  public String toke; // "codigo toke do github"
+  public String token; // "codigo toke do github"
 
   private String Dir;
 
@@ -39,32 +39,32 @@ public class git extends Component {
   public void DownLoad() {
     String DownloadUrl = null;
     boolean onoffFile = false;
-    if (pasth.contains(".")) onoffFile = true;
+    if (path.contains(".")) onoffFile = true;
     if (onoffFile && verifica(false, false)) {
-      DownloadUrl = "https://raw.githubusercontent.com/" + linkNamePasth + "/main/Files/" + pasth;
+      DownloadUrl = "https://raw.githubusercontent.com/" + NameGitIsRepository + "/main/Files/" + path;
       gitclone.GitClone(DownloadUrl, Dir);
 
       StringBuilder InforDate = new StringBuilder();
-      InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(pasth).append("\",\n \"Link\": \"").append(DownloadUrl).append("\"\n}");
+      InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(path).append("\",\n \"Link\": \"").append(DownloadUrl).append("\"\n}");
       Console.log(InforDate.toString());
 
     } else if (verifica(true, false)) {
-      DownloadUrl = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
+      DownloadUrl = "https://api.github.com/repos/" + NameGitIsRepository + "/contents/Files/" + path + "?ref=main";
       File dir = new File(Dir);
-      gitclonemult.gitPasthAll(gitclone, dir, DownloadUrl, toke);
+      gitclonemult.gitPasthAll(gitclone, dir, DownloadUrl, token);
     } 
   }
 
   public void UpLoad() {
     boolean onoffFile = false;
-    if (pasth.contains(".")) onoffFile = true;
+    if (path.contains(".")) onoffFile = true;
     if(!verifica(true, true)) return;
     if (onoffFile) {
-      String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
+      String API_Url = "https://api.github.com/repos/" + NameGitIsRepository + "/contents/Files/" + path + "?ref=main";
       // busca o sha do file
 
-      String shas = gitpush.getSha(API_Url, toke);
-      gitpush.GitPush(API_Url, Commit, Dir, toke, shas);
+      String shas = gitpush.getSha(API_Url, token);
+      gitpush.GitPush(API_Url, Commit, Dir, token, shas);
 
       Console.log(!shas.isEmpty() ? "update" : "create");
       Console.log("Link: " + API_Url);
@@ -73,25 +73,25 @@ public class git extends Component {
       if (dir == null || !dir.exists()) return;
 
       // "lista todos oa file que existe"
-      gitpushmult.UpVariaPasth(gitpush, dir, dir.getAbsolutePath() + "", linkNamePasth, Commit, pasth, toke);
+      gitpushmult.UpVariaPasth(gitpush, dir, dir.getAbsolutePath() + "", NameGitIsRepository, Commit, path, token);
     }
   }
 
-  public boolean verifica(boolean token, boolean pont) {
-    if (!linkNamePasth.contains("/") || linkNamePasth.isEmpty()) {
+  public boolean verifica(boolean Token, boolean pont) {
+    if (!NameGitIsRepository.contains("/") || NameGitIsRepository.isEmpty()) {
       Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
       return false;
     }
-    if (pasth == null || pasth.isEmpty() || (pont && !new File(Directories.getProjectFolder() + "/Files/" + pasth).exists())) {
+    if (path == null || path.isEmpty() || (pont && !new File(Directories.getProjectFolder() + "/Files/" + path).exists())) {
       Toast.showText("caminho para o arquivo esta faltando ou errado", 1);
       return false;
     }
-    if (token && (toke == null || toke.length() < 20)) {
+    if (Token && (token == null || token.length() < 20)) {
       Toast.showText("o toke esta vazio ou faltando", 1);
       return false;
     }
 
-    Dir = Directories.getProjectFolder() + "Files/" + pasth;
+    Dir = Directories.getProjectFolder() + "Files/" + path;
     return true;
   }
 }
