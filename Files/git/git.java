@@ -44,9 +44,11 @@ public class git extends Component {
     String DownloadUrl = null;
     boolean onoffFile = false;
     if (path.contains(".")) onoffFile = true;
-    if (onoffFile && verifica(false, false)) {
-        if(BranchOrCommitRecovery == null && BranchOrCommitRecovery.length() < 40) BranchOrCommitRecovery = "main";
-      DownloadUrl = "https://raw.githubusercontent.com/" + NameGitIsRepository +"/"+ BranchOrCommitRecovery+"/Files/" + path;
+    if (onoffFile && verifica(false, false)) {         
+      if((BranchOrCommitRecovery == null || BranchOrCommitRecovery.length() < 40) && verifica(false, true)) BranchOrCommitRecovery = "main";
+      else Console.log("recuperando file no tempo");
+      
+      DownloadUrl = "https://raw.githubusercontent.com/" + NameGitIsRepository +"/"+ BranchOrCommitRecovery+ "/Files/" + path;
       gitclone.GitClone(DownloadUrl, Dir);
 
       StringBuilder InforDate = new StringBuilder();
