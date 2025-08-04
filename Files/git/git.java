@@ -58,7 +58,8 @@ public class git extends Component {
   public void UpLoad() {
     boolean onoffFile = false;
     if (pasth.contains(".")) onoffFile = true;
-    if (onoffFile && verifica(true, true)) {
+    if(!verifica(true, true)) return;
+    if (onoffFile) {
       String API_Url = "https://api.github.com/repos/" + linkNamePasth + "/contents/Files/" + pasth + "?ref=main";
       // busca o sha do file
 
@@ -67,7 +68,7 @@ public class git extends Component {
 
       Console.log(!shas.isEmpty() ? "update" : "create");
       Console.log("Link: " + API_Url);
-    } else if (verifica(true, false)) {
+    } else {
       File dir = new File(Dir);
       if (dir == null || !dir.exists()) return;
 
@@ -81,7 +82,7 @@ public class git extends Component {
       Toast.showText("esta errado o link do \"nome do usuario do git\" / nome do repositorio", 1);
       return false;
     }
-    if (pasth == null || pasth.isEmpty() || (pont && !new File(Directories.getProjectFolder() + "/Files/" + pasth).isFile())) {
+    if (pasth == null || pasth.isEmpty() || (pont && !new File(Directories.getProjectFolder() + "/Files/" + pasth).exists())) {
       Toast.showText("caminho para o arquivo esta faltando ou errado", 1);
       return false;
     }
