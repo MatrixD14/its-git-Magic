@@ -22,12 +22,17 @@ no campo **path**
   Ex.: path = path1/path2
 
 ------------------------------------------------------------------------------------------------
-campo **BranchOrCommitRecovery**
-  onde vai definir a **Branch** ou recupera o tempo do codigo onde não deu erro usando **Commit sha**, o **branch** esta disponivel, so para **Download** então mantenha o **branch** em "main" como padrão para baixar os arquivos atualizados 
-  
-  Ex.: BranchOrCommitRecovery = main  //padrão de um repositorio criado e não adiciono mais uma branch
 
+campo **BranchOrCommitRecovery**
+
+  onde vai definir a **Branch** ou recupera no tempo do codigo onde não deu erro usando **Commit sha**, o **branch** esta disponivel, so para **Download** então mantenha o **branch** em "main" como padrão para baixar os arquivos atualizados 
+
+ "main" padrão de um repositorio criado recentimente
+ 
+  Ex.: BranchOrCommitRecovery = main 
+  
 ------------------------------------------------------------------------------------------------
+
 campo **Commit**
 
   Aqui você coloca uma mensagem curta dizendo o que está enviando para o GitHub.
