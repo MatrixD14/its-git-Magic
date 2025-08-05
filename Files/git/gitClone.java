@@ -9,7 +9,12 @@ public class gitClone {
     if (paretDir != null && !paretDir.exists()) paretDir.mkdirs();
 
     try {
-      in = new URL(link).openStream();
+      HttpURLConnection com = (HttpURLConnection) new URL(link).openConnection();
+      if (com.getResponseCode() != 200) {
+          Console.log("erro no Http: "+ com.getResponseCode());
+        return;
+      } 
+      in = com.getInputStream();
       bs = new BufferedInputStream(in);
       fs = new FileOutputStream(addPasth);
       byte[] date = new byte[1024];
@@ -35,7 +40,7 @@ public class gitClone {
         if (in != null) in.close();
       } catch (IOException e) {
         Console.log("erro no InputStream: " + e.getMessage());
-      } 
+      }
     }
   }
 }
