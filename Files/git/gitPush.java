@@ -12,11 +12,9 @@ public class gitPush {
       json.append("\n}");
       Console.log("{\n  \"message\": \""+menssage+"\",\n  \"branch\": \"main\",\n  "+((sha != null && !sha.isEmpty())?"\"sha\": \""+sha:"")+"\"\n}");
 
-      URL url = new URL(link);
-
       // connect com o github
 
-      HttpURLConnection com = (HttpURLConnection) url.openConnection();
+      HttpURLConnection com = (HttpURLConnection) new URL(link).openConnection();
       com.setRequestMethod("PUT");
       com.setDoOutput(true);
       com.setRequestProperty("Authorization", "token " + token);
