@@ -20,6 +20,7 @@ public class gitPushMult {
 
           public void onEngine(Object result) {
             Console.log("upload Ended");
+            Toast.showText("UpLoad the End",1);
           }
         });
   }
