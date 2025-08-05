@@ -17,16 +17,14 @@ public class gitCloneMult {
 
           public void onEngine(Object result) {
             Console.log("Download finalizado");
-            Toast.showText("DownLoad the End",1);
+            Toast.showText("DownLoad the End", 1);
           }
         });
   }
 
   public void processFile() {
     try {
-      URL url = new URL(link);
-
-      HttpURLConnection com = (HttpURLConnection) url.openConnection();
+      HttpURLConnection com = (HttpURLConnection) new URL(link).openConnection();
       com.setRequestMethod("GET");
       com.setRequestProperty("Authorization", "token " + token);
       com.setRequestProperty("Accept", "application/vnd.github.v3+json");
@@ -40,23 +38,48 @@ public class gitCloneMult {
       input.close();
       com.disconnect();
 
-      FileJson(result.toString());
+      FileJson(result.toString(),"");
     } catch (IOException e) {
       Console.log("erro no json: " + e.getMessage());
-    } 
+    }
   }
 
-  public void FileJson(String jsons) {
+  public void FileJson(String jsons, String subPath) {
     try {
       GitCloneJson[] file = (GitCloneJson[]) Json.fromJson(jsons, GitCloneJson[].class, true);
       for (GitCloneJson json : file) {
         if (json.type.equals("file")) {
-          String destino = new File(Dir, json.name).getAbsolutePath();
-          gitclone.GitClone(json.download_url, destino);
-          StringBuilder InforDate = new StringBuilder();
-          InforDate.append("{\n \"pasth\": \"").append(Dir).append("\",\n \"NameFile\": \"").append(destino).append("\",\n \"Link\": \"").append(json.download_url).append("\"\n}");
-          Console.log(InforDate.toString());
-          Console.log(new File(destino).exists() ? "file já existe sobrescrevendo" : "");
+          File destino = new File(Dir, subPath + "/" + json.name);
+          gitclone.GitClone(json.download_url, destino.getAbsolutePath());
+          StringBuilder inforData = new StringBuilder();
+          inforData.append("{\n \"Path\" : \"").append(Dir).append("\",\n \"File\" : \"").append(destino.getAbsolutePath()).append("\",\n \"Link\" : \"").append(json.url).append("\"\n}");
+          Console.log(inforData.toString());
+          Console.log(destino.exists()?"já existe sobrescrevel":"");
+          
+        } else if (json.type.equals("dir") || json.type.equals("directory")) {
+            String pathAll = subPath + "/" + json.name;
+            File path = new File(Dir, pathAll);
+            if(!path.exists()) path.mkdirs();
+            
+          try {
+            HttpURLConnection com = (HttpURLConnection) new URL(json.url).openConnection();
+            com.setRequestMethod("GET");
+            com.setRequestProperty("Authorization", "token " + token);
+            com.setRequestProperty("Accept", "application/vnd.github.v3+json");
+
+            int menss = com.getResponseCode();
+            InputStream input = (menss >= 400) ? com.getErrorStream() : com.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) result.append(line);
+            input.close();
+            com.disconnect();
+
+            FileJson(result.toString(),pathAll);
+          } catch (Exception e) {
+              Console.log("erro ao acessar a path: "+subPath+ " -->" + e.getMessage());
+          } 
         }
       }
     } catch (Exception e) {
@@ -66,6 +89,7 @@ public class gitCloneMult {
 
   public static class GitCloneJson {
     public String name;
+    public String url;
     public String download_url;
     public String type;
     public String sha;
