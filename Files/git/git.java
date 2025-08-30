@@ -28,7 +28,7 @@ public class git extends Component {
           new PropertiesButtonListener() {
             void onClicked() {
               DownLoad();
-            } 
+            }
           });
 
   @Order(idx = 4)
@@ -83,6 +83,18 @@ public class git extends Component {
       gitpushmult.UpVariaPasth(gitpush, dir, dir.getAbsolutePath() + "", NameGitIsRepository, Commit, path, token);
     }
   }
+  
+  private boolean checkNext() {
+    try {
+      URL url = new URL("https://www.google.com");
+      HttpURLConnection com = (HttpURLConnection) url.openConnection();
+      com.setConnectTimeout(2000);
+      com.connect();
+      return com.getResponseCode() == 200;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 
   public boolean verifica(boolean Token, boolean pont) {
     if (!NameGitIsRepository.contains("/") || NameGitIsRepository.isEmpty()) {
@@ -97,6 +109,10 @@ public class git extends Component {
       Toast.showText("o toke esta vazio ou faltando", 1);
       return false;
     }
+    if (!checkNext()) {
+      Toast.showText("sem Connection com internet", 1);
+      return false;
+    } 
 
     Dir = Directories.getProjectFolder() + "Files/" + path;
     return true;
