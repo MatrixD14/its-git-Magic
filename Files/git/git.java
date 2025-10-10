@@ -36,33 +36,30 @@ public class git extends Component {
       new PropertiesButton(
           new PropertiesButtonListener() {
             void onClicked() {
-              UpLoad();
+              menssagem();
             }
           });
 
-  boolean onoff = false;
   PopupDialog mssg;
 
-  private boolean menssagem() {
+  private void menssagem() {
     mssg = new PopupDialog(PopupDialog.ALERT, "voce tem certesa que quer enviar", "");
     mssg.setConfirmButton(
         "confirm",
         new PopupDialogListener() {
           public void onClicked() {
             mssg.dismiss();
-            onoff = true;
-          }
+            UpLoad();
+          } 
         });
     mssg.setCancelButton(
         "cancel",
         new PopupDialogListener() {
           public void onClicked() {
             mssg.dismiss();
-            onoff = false;
           }
         });
     mssg.show();
-    return onoff;
   }
 
   public void DownLoad() {
@@ -90,7 +87,7 @@ public class git extends Component {
   public void UpLoad() {
     boolean onoffFile = false;
     if (path.contains(".")) onoffFile = true;
-    if (!verifica(true, true) || menssagem()) return;
+    if (!verifica(true, true)) return;
     if (onoffFile) {
       String API_Url = "https://api.github.com/repos/" + NameGitIsRepository + "/contents/Files/" + path + "?ref=main";
       // busca o sha do file
@@ -106,7 +103,7 @@ public class git extends Component {
 
       // "lista todos oa file que existe"
       gitpushmult.UpVariaPasth(gitpush, dir, dir.getAbsolutePath() + "", NameGitIsRepository, Commit, path, token);
-    } 
+    }
   }
 
   public boolean verifica(boolean Token, boolean pont) {
