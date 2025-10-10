@@ -40,6 +40,31 @@ public class git extends Component {
             }
           });
 
+  boolean onoff = false;
+  PopupDialog mssg;
+
+  private boolean menssagem() {
+    mssg = new PopupDialog(PopupDialog.ALERT, "voce tem certesa que quer enviar", "");
+    mssg.setConfirmButton(
+        "confirm",
+        new PopupDialogListener() {
+          public void onClicked() {
+            mssg.dismiss();
+            onoff = true;
+          }
+        });
+    mssg.setCancelButton(
+        "cancel",
+        new PopupDialogListener() {
+          public void onClicked() {
+            mssg.dismiss();
+            onoff = false;
+          }
+        });
+    mssg.show();
+    return onoff;
+  }
+
   public void DownLoad() {
     String DownloadUrl = null;
     boolean onoffFile = false;
@@ -65,7 +90,7 @@ public class git extends Component {
   public void UpLoad() {
     boolean onoffFile = false;
     if (path.contains(".")) onoffFile = true;
-    if (!verifica(true, true)) return;
+    if (!verifica(true, true) || menssagem()) return;
     if (onoffFile) {
       String API_Url = "https://api.github.com/repos/" + NameGitIsRepository + "/contents/Files/" + path + "?ref=main";
       // busca o sha do file
@@ -81,19 +106,7 @@ public class git extends Component {
 
       // "lista todos oa file que existe"
       gitpushmult.UpVariaPasth(gitpush, dir, dir.getAbsolutePath() + "", NameGitIsRepository, Commit, path, token);
-    }
-  }
-  
-  private boolean checkNext() {
-    try {
-      URL url = new URL("https://www.google.com");
-      HttpURLConnection com = (HttpURLConnection) url.openConnection();
-      com.setConnectTimeout(2000);
-      com.connect();
-      return com.getResponseCode() == 200;
-    } catch (Exception e) {
-      return false;
-    }
+    } 
   }
 
   public boolean verifica(boolean Token, boolean pont) {
@@ -109,10 +122,6 @@ public class git extends Component {
       Toast.showText("o toke esta vazio ou faltando", 1);
       return false;
     }
-    if (!checkNext()) {
-      Toast.showText("sem Connection com internet", 1);
-      return false;
-    } 
 
     Dir = Directories.getProjectFolder() + "Files/" + path;
     return true;
