@@ -30,7 +30,8 @@ public class git extends Component {
       new PropertiesButton(
           new PropertiesButtonListener() {
             void onClicked() {
-              DownLoad();
+              onoff = 2;
+              Alert();
             }
           });
 
@@ -41,7 +42,7 @@ public class git extends Component {
             void onClicked() {
               onoff = 1;
               Alert();
-            } 
+            }
           });
 
   private void Alert() {
@@ -50,12 +51,12 @@ public class git extends Component {
         "confirm",
         new PopupDialogListener() {
           public void onClicked() {
-            if (onoff == 1) {
-              UpLoad();
-              onoff = 0;
-            }
+            if (onoff == 1) UpLoad();
+            if (onoff == 2) DownLoad();
+            onoff = 0;
+
             mssg.dismiss();
-          }
+          } 
         });
     mssg.setCancelButton(
         "cancel",
