@@ -16,9 +16,9 @@ public class git extends Component {
   public String token; // "codigo toke do github"
 
   private String Dir;
-  
+
   PopupDialog mssg;
-  boolean onoff = false;
+  int onoff = 0;
 
   private gitClone gitclone = new gitClone();
   private gitPush gitpush = new gitPush();
@@ -39,32 +39,34 @@ public class git extends Component {
       new PropertiesButton(
           new PropertiesButtonListener() {
             void onClicked() {
+              onoff = 1;
               Alert();
-              if(onoff)UpLoad();
-            }
+            } 
           });
 
-
   private void Alert() {
-    mssg = new PopupDialog(PopupDialog.ALERT, "voce tem certesa quer envia/baixa "+path, "");
+    mssg = new PopupDialog(PopupDialog.ALERT, "voce tem certesa quer envia/baixa " + path, "");
     mssg.setConfirmButton(
         "confirm",
         new PopupDialogListener() {
           public void onClicked() {
-            onoff = true;
+            if (onoff == 1) {
+              UpLoad();
+              onoff = 0;
+            }
             mssg.dismiss();
-          } 
+          }
         });
     mssg.setCancelButton(
         "cancel",
         new PopupDialogListener() {
           public void onClicked() {
-            onoff = false;
+
             mssg.dismiss();
           }
         });
     mssg.show();
-  // return false;
+    // return false;
   }
 
   public void DownLoad() {
