@@ -16,6 +16,9 @@ public class git extends Component {
   public String token; // "codigo toke do github"
 
   private String Dir;
+  
+  PopupDialog mssg;
+  boolean onoff = false;
 
   private gitClone gitclone = new gitClone();
   private gitPush gitpush = new gitPush();
@@ -37,15 +40,13 @@ public class git extends Component {
           new PropertiesButtonListener() {
             void onClicked() {
               Alert();
-              UpLoad();
+              if(onoff)UpLoad();
             }
           });
 
-  PopupDialog mssg;
-  boolean onoff = false;
 
-  private boolean Alert() {
-    mssg = new PopupDialog(PopupDialog.ALERT, "voce tem certesa que quer envia/baixa "+path, "");
+  private void Alert() {
+    mssg = new PopupDialog(PopupDialog.ALERT, "voce tem certesa quer envia/baixa "+path, "");
     mssg.setConfirmButton(
         "confirm",
         new PopupDialogListener() {
@@ -63,7 +64,7 @@ public class git extends Component {
           }
         });
     mssg.show();
-   return false;
+  // return false;
   }
 
   public void DownLoad() {
@@ -91,7 +92,7 @@ public class git extends Component {
   public void UpLoad() {
     boolean onoffFile = false;
     if (path.contains(".")) onoffFile = true;
-    if (!verifica(true, true) || onoff) return;
+    if (!verifica(true, true)) return;
     if (onoffFile) {
       String API_Url = "https://api.github.com/repos/" + NameGitIsRepository + "/contents/Files/" + path + "?ref=main";
       // busca o sha do file
