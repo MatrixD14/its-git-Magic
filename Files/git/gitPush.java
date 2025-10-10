@@ -10,7 +10,7 @@ public class gitPush {
       json.append("{\n  \"message\": \"").append(menssage).append("\",\n  \"content\": \"").append(encode).append("\",\n  \"branch\": \"main\"");
       if (sha != null && !sha.isEmpty()) json.append(",\n  \"sha\": \"").append(sha).append("\"");
       json.append("\n}");
-      Console.log("{\n  \"message\": \"" + menssage + "\",\n  \"branch\": \"main\",\n  " + ((sha != null && !sha.isEmpty()) ? "\"sha\": \"" + sha : "") + "\"\n}");
+      Console.log("{\n  \"message\": \""+menssage+"\",\n  \"branch\": \"main\",\n  "+((sha != null && !sha.isEmpty())?"\"sha\": \""+sha:"")+"\"\n}");
 
       // connect com o github
 
@@ -87,9 +87,9 @@ public class gitPush {
       Console.log(e);
     }
     return "";
-  } 
+  }
 
   public static class GitPushJson {
     public String sha;
-  }
+  } 
 }
